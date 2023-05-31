@@ -4,6 +4,12 @@ This project was bootstrapped with Fastify-CLI.
 
 ## Available Scripts
 
+Initial steps for the database setup:
+
+- Create database and create a `.env` file using the `.env.example`
+- `npm run migration`
+- `npm run seed`
+
 In the project directory, you can run:
 
 ### `npm run dev`

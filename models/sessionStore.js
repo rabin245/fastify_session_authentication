@@ -1,6 +1,4 @@
-import { DataTypes } from "sequelize";
-
-const sessionModel = (sequelize) => {
+const sessionModel = (sequelize, DataTypes) => {
   return sequelize.define("Sessions", {
     sid: {
       type: DataTypes.STRING,

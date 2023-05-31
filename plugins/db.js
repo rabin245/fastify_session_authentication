@@ -1,7 +1,6 @@
 import fp from "fastify-plugin";
-import Sequelize from "sequelize";
-import * as dotenv from "dotenv";
-dotenv.config();
+import Sequelize, { DataTypes } from "sequelize";
+import config from "../config/config.js";
 
 import postModel from "../models/posts.js";
 import userModel from "../models/users.js";
@@ -9,12 +8,12 @@ import sessionModel from "../models/sessionStore.js";
 
 export default fp(async function (fastify, opts) {
   const sequelize = new Sequelize(
-    process.env.PSQLDATABASE,
-    process.env.PSQLUSER,
-    process.env.PSQLPASSWORD,
+    config.development.database,
+    config.development.username,
+    config.development.password,
     {
-      host: process.env.PSQLHOST,
-      dialect: "postgres",
+      host: config.development.host,
+      dialect: config.development.dialect,
     }
   );
 
@@ -22,9 +21,9 @@ export default fp(async function (fastify, opts) {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
 
-    const Post = postModel(sequelize);
-    const User = userModel(sequelize);
-    const Sessions = sessionModel(sequelize);
+    const Post = postModel(sequelize, DataTypes);
+    const User = userModel(sequelize, DataTypes);
+    const Sessions = sessionModel(sequelize, DataTypes);
 
     User.hasMany(Post, { foreignKey: "userId" });
     Post.belongsTo(User, { foreignKey: "userId" });
