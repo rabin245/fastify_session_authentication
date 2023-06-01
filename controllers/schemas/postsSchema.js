@@ -4,7 +4,7 @@ const postSchema = {
     id: { type: "number" },
     title: { type: "string" },
     content: { type: "string" },
-    userId: { type: "number" },
+    userId: { type: "string" },
     user: {
       type: "object",
       properties: {
@@ -28,7 +28,7 @@ const postJsonBodySchema = {
   properties: {
     title: { type: "string" },
     content: { type: "string" },
-    userId: { type: "number" },
+    userId: { type: "string" },
   },
 };
 

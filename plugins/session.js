@@ -14,15 +14,15 @@ async function session(fastify, opts) {
     cookie: {
       secure: false,
       httpOnly: true,
-      maxAge: 60 * 1000,
-      expires: Date.now() + 60 * 1000,
+      maxAge: 15 * 60 * 1000,
+      expires: Date.now() + 15 * 60 * 1000,
     },
-    expires: Date.now() + 60 * 1000,
+    expires: Date.now() + 15 * 60 * 1000,
     saveUninitialized: false, // don't create session until something stored
     store: new SequelizeStore({
       db: fastify.sequelize,
       table: "Sessions",
-      checkExpirationInterval: 5 * 60 * 1000, // check for expired sessions every 5 minutes and delete them
+      checkExpirationInterval: 15 * 60 * 1000, // check for expired sessions every 5 minutes and delete them
     }),
   });
 
