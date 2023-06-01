@@ -2,36 +2,42 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("posts", [
+    const users = await queryInterface.sequelize.query(
+      "SELECT id FROM users;",
+      { type: Sequelize.QueryTypes.SELECT }
+    );
+    const posts = [
       {
         title: "Post 1",
         content: "Content 1",
-        userId: 1,
+        userId: users[0].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         title: "Post 2",
-        content: "Conrent 2",
-        userId: 1,
+        content: "Content 2",
+        userId: users[0].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         title: "Post 3",
         content: "Content 3",
-        userId: 2,
+        userId: users[1].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         title: "Post 4",
-        content: "Conrent 4",
-        userId: 2,
+        content: "Content 4",
+        userId: users[1].id,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-    ]);
+    ];
+
+    await queryInterface.bulkInsert("posts", posts);
   },
 
   async down(queryInterface, Sequelize) {

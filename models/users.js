@@ -1,9 +1,9 @@
 const userModel = (sequelize, DataTypes) => {
   return sequelize.define("users", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      autoIncrement: true,
     },
     username: DataTypes.STRING(255),
     password: DataTypes.STRING(255),

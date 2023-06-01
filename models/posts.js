@@ -11,7 +11,7 @@ const postModel = (sequelize, DataTypes) => {
     },
     content: DataTypes.TEXT,
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: "users",

@@ -14,7 +14,7 @@ module.exports = {
       },
       content: Sequelize.TEXT,
       userId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: "users",
