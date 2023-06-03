@@ -42,7 +42,7 @@ export default {
   },
   logout: async (request, reply) => {
     try {
-      if (!request.session) throw new Error("No user logged in");
+      if (!request.session.userId) throw new Error("No user logged in");
 
       // destroys session in store
       await request.session.destroy();

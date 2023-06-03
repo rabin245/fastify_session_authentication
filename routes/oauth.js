@@ -11,6 +11,10 @@ export default async function (fastify, optns) {
         );
       console.log("testing \n\n\n", token);
       request.session.token = token;
+      console.log(
+        "testing to see if the token is set: \n\n ",
+        request.session.token
+      );
       reply.redirect("/auth/login/github/verifyAccessToken");
     } catch (err) {
       console.log(err);
@@ -20,6 +24,11 @@ export default async function (fastify, optns) {
   fastify.get(
     "/auth/login/github/verifyAccessToken",
     async function (request, reply) {
+      console.log(
+        "testing to see the session token here: \n\n ",
+        request.session.token
+      );
+
       const accessToken = request.session.token.access_token;
       const clientId = process.env.GITHUB_CLIENT_ID;
       const clientSecret = process.env.GITHUB_CLIENT_SECRET;
@@ -49,8 +58,9 @@ export default async function (fastify, optns) {
         request.session.userId = user[0].id;
 
         // reply.send(response.data);
-        reply.redirect("/posts");
+        // reply.redirect("/posts");
         // reply.redirect("/");
+        reply.redirect("http://localhost:5173");
       } catch (error) {
         reply.send(error);
       }
@@ -66,6 +76,10 @@ export default async function (fastify, optns) {
 
       console.log("testing \n\n\n", token);
       request.session.token = token;
+      console.log(
+        "testing to see if session token is set: \n\n",
+        request.session.token
+      );
       reply.redirect("/auth/login/google/verifyAccessToken");
       // reply.redirect("/");
     } catch (error) {
@@ -76,6 +90,7 @@ export default async function (fastify, optns) {
   fastify.get(
     "/auth/login/google/verifyAccessToken",
     async function (request, reply) {
+      console.log("tseting for undefined token: \n\n\n", request.session.token);
       const accessToken = request.session.token.access_token;
       const clientId = process.env.GOOGLE_CLIENT_ID;
       const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
@@ -108,8 +123,8 @@ export default async function (fastify, optns) {
         request.session.userId = user[0].id;
 
         // reply.send(response.data);
-
-        reply.redirect("/posts");
+        // reply.redirect("/posts");
+        reply.redirect("http://localhost:5173");
       } catch (error) {
         reply.send(error);
       }

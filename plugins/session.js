@@ -16,7 +16,9 @@ async function session(fastify, opts) {
       httpOnly: true,
       maxAge: 15 * 60 * 1000,
       expires: Date.now() + 15 * 60 * 1000,
+      // sameSite: "none", // this is needed for cross-site cookies to work in browsers, but it can work only over HTTPS
     },
+
     expires: Date.now() + 15 * 60 * 1000,
     saveUninitialized: false, // don't create session until something stored
     store: new SequelizeStore({
@@ -28,14 +30,19 @@ async function session(fastify, opts) {
 
   fastify.decorate("authenticate", async function (request, reply) {
     try {
+      console.log(
+        "testing for the userid in session \n",
+        request.session.userId
+      );
       if (!request.session.userId) {
+        console.log("no userid found in session");
         throw new Error("No user logged in");
       }
       const User = request.server.User;
       const user = await User.findByPk(request.session.userId);
-      console.log(request.session.userId);
+      console.log("inside authenticate decorator", request.session.userId);
 
-      if (!user) throw new Error("No user logged in");
+      if (!user) throw new Error("No such user exists");
 
       request.user = user;
 
@@ -44,7 +51,7 @@ async function session(fastify, opts) {
       console.log(error.message);
 
       if (error.message === "No user logged in")
-        reply.code(401).send({ error: "Unauthorized" });
+        reply.code(401).send({ error: "Unauthorized! No user logged in" });
       else
         reply.code(500).send({
           error: "Internal Server Error",
