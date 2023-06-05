@@ -6,7 +6,9 @@ async function csrf(fastify, opts) {
     // getToken: (req) => {
     //   return req.headers["csrf-token"];
     // },
+    sessionPlugin: "@fastify/session",
     getToken: (req) => {
+      console.log("logging csrfToken\n\n: ", req.session.csrfToken);
       return req.session.csrfToken;
     },
   });
