@@ -1,4 +1,5 @@
 import authHandler from "../controllers/handlers/authHandler.js";
+import authSchema from "../controllers/schemas/authSchema.js";
 
 export default async function (fastify, opts) {
   const loginOption = {
@@ -7,7 +8,8 @@ export default async function (fastify, opts) {
   };
 
   const signupOption = {
-    schema: {},
+    schema: authSchema.signup,
+    validatorCompiler: authSchema.validatorCompiler,
     handler: authHandler.signup,
   };
 
