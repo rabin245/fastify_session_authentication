@@ -12,8 +12,13 @@ export default {
 
       request.session.userId = user.id;
       const csrfToken = await reply.generateCsrf();
+      request.session.csrfToken = csrfToken;
 
-      reply.send({ message: "Login Success", csrf: csrfToken });
+      reply.send({
+        message: "Login Success",
+        csrf: csrfToken,
+        session: request.session,
+      });
     } catch (error) {
       console.log(error);
       reply.code(500).send({
