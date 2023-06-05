@@ -3,12 +3,13 @@ import authSchema from "../controllers/schemas/authSchema.js";
 
 export default async function (fastify, opts) {
   const loginOption = {
-    schema: {},
+    schema: authSchema.userCredentials,
+    validatorCompiler: authSchema.validatorCompiler,
     handler: authHandler.login,
   };
 
   const signupOption = {
-    schema: authSchema.signup,
+    schema: authSchema.userCredentials,
     validatorCompiler: authSchema.validatorCompiler,
     handler: authHandler.signup,
   };

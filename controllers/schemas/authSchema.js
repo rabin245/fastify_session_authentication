@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export default {
-  signup: {
+  userCredentials: {
     body: Joi.object()
       .keys({
         username: Joi.string().min(2).required(),
