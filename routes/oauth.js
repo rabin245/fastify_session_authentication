@@ -15,6 +15,10 @@ export default async function (fastify, optns) {
         "testing to see if the token is set: \n\n ",
         request.session.token
       );
+
+      const csrfToken = await reply.generateCsrf();
+      request.session.csrfToken = csrfToken;
+
       reply.redirect("/auth/login/github/verifyAccessToken");
     } catch (err) {
       console.log(err);
@@ -80,6 +84,10 @@ export default async function (fastify, optns) {
         "testing to see if session token is set: \n\n",
         request.session.token
       );
+
+      const csrfToken = await reply.generateCsrf();
+      request.session.csrfToken = csrfToken;
+
       reply.redirect("/auth/login/google/verifyAccessToken");
       // reply.redirect("/");
     } catch (error) {
