@@ -11,8 +11,9 @@ export default {
         reply.code(401).send({ error: "Incorrect username or password" });
 
       request.session.userId = user.id;
+      const csrfToken = await reply.generateCsrf();
 
-      reply.send({ message: "Login Success" });
+      reply.send({ message: "Login Success", csrf: csrfToken });
     } catch (error) {
       console.log(error);
       reply.code(500).send({
